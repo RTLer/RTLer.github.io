@@ -6,7 +6,6 @@ categories:
 tags:
   - DevOps
 ---
-Laravel+Octane
 For years Deploying PHP applications using nginx+fpm was the best practice and will be for some types of applications. But in modern environments like Kubernetes, it's not performing that well. Besides, it boots applications for every request (add something like 100ms to every request for applications using Laravel, for example)
 
 ## RoadRunner
