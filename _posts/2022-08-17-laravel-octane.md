@@ -1,6 +1,6 @@
 ---
 title: "Laravel+Octane"
-date: 2019-04-18T15:34:30-04:00
+date: 2022-08-14T00:00:00-04:00
 categories:
   - blog
 tags:
