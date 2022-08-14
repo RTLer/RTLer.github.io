@@ -26,6 +26,20 @@ php artisan octane:start --workers=8 --host=0.0.0.0 --port=8080 --max-requests=5
 
 Your application will be accessible at `http://0.0.0.0:8080`, easy as that.
 
+```bash
+  200    GET / ............... 120.36 ms
+  200    GET / ............... 122.04 ms
+  200    GET / ............... 123.24 ms
+  200    GET / ............... 118.48 ms
+  200    GET / ............... 121.75 ms
+  200    GET / ............... 118.00 ms
+  200    GET / ............... 127.32 ms
+  200    GET / ............... 123.82 ms
+  200    GET / ................. 3.08 ms
+  200    GET / ................. 4.98 ms
+  200    GET / ................. 2.96 ms
+```
+
 When refreshing the page, you can see that the first 8 requests are slower than the rest. That's because, during those requests, Roadrunner is booting the application in workers, and for the rest, it reuses those booted workers.
 
 ### RoadRunner plugins
