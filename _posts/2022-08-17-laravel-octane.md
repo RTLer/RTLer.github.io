@@ -44,7 +44,7 @@ RoadRunner has many [plugins](https://roadrunner.dev/docs/plugins-intro/2.x/en) 
 
 I used RoadRunner in a project that handles millions of requests per day, and with it and some production tweaking for it like 'OPcache CLI'  that you can find on its [official documentation](https://roadrunner.dev/docs/app-server-production/2.x/en) now that service uses about 2% of what it used to use before.
 
-For code just needed to make sure that there was no static or global variable. You can read more about it in the managing [memory leaks section](https://laravel.com/docs/9.x/octane#managing-memory-leaks) of Laravel octane documents
+As for code just needed to ensure there is no static or global variable. You can read more about it in the managing [memory leaks section](https://laravel.com/docs/9.x/octane#managing-memory-leaks) of Laravel octane documents
 
 ## links
 
