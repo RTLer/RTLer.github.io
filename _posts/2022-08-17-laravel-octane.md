@@ -10,8 +10,9 @@ For years Deploying PHP applications using nginx+fpm was the best practice and w
 
 ## RoadRunner
 
-RoadRunner is a PHP application server that runs your application in workers instead of running it for every request.
-Roadrunner can be used in Laravel applications via Laravel's official package Octane. You can install it easily by requiring it:
+RoadRunner is a PHP application server that runs your application in workers instead of running it for every request. And with a little bit of PSR7Worker magic, you can make your app ready to use RoadRunner.
+
+The good news is that Laravel has an official package named Octane that You can install easily by requiring it:
 
 ```bash
 composer require laravel/octane
@@ -42,11 +43,21 @@ RoadRunner has many [plugins](https://roadrunner.dev/docs/plugins-intro/2.x/en) 
 
 ## a personal experience
 
-I used RoadRunner in a project that handles millions of requests per day, and with it and some production tweaking for it like 'OPcache CLI'  that you can find on its [official documentation](https://roadrunner.dev/docs/app-server-production/2.x/en) now that service uses about 2% of what it used to use before.
+I used RoadRunner in a project that handles millions of requests per day, and with it and some production tweaking for it like 'OPcache CLI'  that you can find on its [official documentation](https://roadrunner.dev/docs/app-server-production/2.x/en) now that service uses about 20% of what it used to use before.
+from '454 requests in 5s' to '2467 requests in 5s' (using go-wrk for HTTP benchmarking)
 
-As for code just needed to ensure there is no static or global variable. You can read more about it in the managing [memory leaks section](https://laravel.com/docs/9.x/octane#managing-memory-leaks) of Laravel octane documents
+As for code just needed to ensure there is no static or global variable. You can read more about it in the managing [memory leaks section](https://laravel.com/docs/9.x/octane#managing-memory-leaks) of Laravel octane documents.
+if you have any static variables or something that needs resetting, you can reset it by adding a listener to `octane.listeners.RequestReceived::class` like so, for example:
+
+ ```php
+       RequestReceived::class => [
+            ...Octane::prepareApplicationForNextOperation(),
+            ...Octane::prepareApplicationForNextRequest(),
+            \App\Listeners\FlushStates::class, // <==
+        ],
+```
 
 ## links
 
-<https://roadrunner.dev/docs>
-<https://laravel.com/docs/9.x/octane>
+- <https://roadrunner.dev/docs>
+- <https://laravel.com/docs/9.x/octane>
