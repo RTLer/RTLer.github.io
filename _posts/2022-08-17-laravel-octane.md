@@ -43,17 +43,19 @@ RoadRunner has many [plugins](https://roadrunner.dev/docs/plugins-intro/2.x/en) 
 
 ## a personal experience
 
-I used RoadRunner in a project that handles millions of requests per day, and with it and some production tweaking for it like 'OPcache CLI'  that you can find on its [official documentation](https://roadrunner.dev/docs/app-server-production/2.x/en) now that service uses about 20% of what it used to use before.
-from '454 requests in 5s' to '2467 requests in 5s' (using go-wrk for HTTP benchmarking)
+I used RoadRunner in a project that handles millions of requests per day, and with it and some production tweaking for it like `OPcache CLI` that you can find on its [official documentation](https://roadrunner.dev/docs/app-server-production/2.x/en) now that service uses about 20% of what it used to use before.
+
+from `454 requests in 5s` to `2467 requests in 5s` (using go-wrk for HTTP benchmarking)
 
 As for code just needed to ensure there is no static or global variable. You can read more about it in the managing [memory leaks section](https://laravel.com/docs/9.x/octane#managing-memory-leaks) of Laravel octane documents.
-if you have any static variables or something that needs resetting, you can reset it by adding a listener to `octane.listeners.RequestReceived::class` like so, for example:
+
+if you have any static variables or something that needs resetting, you can reset it before handling a new request by adding a listener to `octane.listeners.RequestReceived::class` like so, for example:
 
  ```php
        RequestReceived::class => [
             ...Octane::prepareApplicationForNextOperation(),
             ...Octane::prepareApplicationForNextRequest(),
-            \App\Listeners\FlushStates::class, // <==
+            \App\Listeners\FlushStates::class, // <====
         ],
 ```
 
